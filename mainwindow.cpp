@@ -8,38 +8,15 @@
 
 #include <JSONConfigManager.hpp>
 
-#define LINE_EDIT_PLACEHOLDER "Введите значение"
-#define COMBO_BOX_PLACEHOLDER "Не выбрано"
 
-std::shared_ptr<QLineEdit> getLineEdit(QString const & placeholder = LINE_EDIT_PLACEHOLDER, bool readOnly = false) {
-    std::shared_ptr<QLineEdit> lineEdit{ new QLineEdit };
-    lineEdit->setPlaceholderText(placeholder);
-    lineEdit->setReadOnly(readOnly);
-    return lineEdit;
-}
-
-std::shared_ptr<QLineEdit> getLineEdit(bool readOnly) {
-    return getLineEdit(LINE_EDIT_PLACEHOLDER, readOnly);
-}
-
-std::shared_ptr<QComboBox> getComboBox(QString const & placeholder = COMBO_BOX_PLACEHOLDER) {
-    std::shared_ptr<QComboBox> comboBox{ new QComboBox };
-    comboBox->setPlaceholderText(placeholder);
-    return comboBox;
-}
-
-void fillComboBox(QComboBox & comboBox, std::vector<std::string> const & options) {
-    for (auto const & option : options)
-        comboBox.addItem(option.c_str());
-}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    std::shared_ptr<JSONConfigManager> jsonConfigManager{ new JSONConfigManager{"/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc/data/config.json", false } };
-    auto connections = jsonConfigManager->getConnections();
+    _configManager = new JSONConfigManager{"/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc/data/config.json", false };
+    auto connections = _configManager->getConnections();
 
     _paintConsumptionDataManager = new PaintConsumptionDataManager{connections.at("paint_consumption")};
     _paintDataManager = new PaintDataManager{connections.at("paint_calculation"), _paintConsumptionDataManager};
@@ -47,45 +24,49 @@ MainWindow::MainWindow(QWidget *parent)
     _foilRollsDataManager = new FoilRollsDataManager{connections.at("foil_rolls")};
     _foilDataManager = new FoilDataManager{connections.at("foil_calculation"), _foilRollsDataManager};
 
+    _paintCalculationTab = new PaintCalculationTab(_paintDataManager);
+
     // setting up paint calculation tab
-    auto paintCalculationPresetComboBox = getComboBox();
-    fillComboBox(*paintCalculationPresetComboBox, _paintDataManager->getConnection()->getPresetNames());
-    ui->paintPresetField->set(paintCalculationPresetComboBox, "Имя пресета");
+    ui->paintPresetField->set(_paintCalculationTab->getPresetName(), "Имя пресета");
 
     //connect(paintCalculationPresetComboBox.get(), &QComboBox::currentTextChanged, this, &MainWindow::on_pcCalculateButton_clicked);
+    ui->paintTypeField->set(_paintCalculationTab->getPaintType(), "Тип краски");
+    ui->materialTypeField->set(_paintCalculationTab->getMaterialType(), "Тип материала");
 
-    auto paintTypeComboBox = getComboBox();
-    fillComboBox(*paintTypeComboBox, _paintDataManager->getPaintTypes());
-    ui->paintTypeField->set(paintTypeComboBox, "Тип краски");
+    ui->paintConsumptionField->set(_paintCalculationTab->getPaintConsumption(), "Расход краски", "г/м2");
+    ui->dividerField->set(_paintCalculationTab->getDivider(), "Делитель");
+    ui->percentageField->set(_paintCalculationTab->getPercent(), "Процент запечатки", "%");
+    ui->sheetWidthField->set(_paintCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
+    ui->sheetLengthField->set(_paintCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
+    ui->circulationField->set(_paintCalculationTab->getCirculation(), "Тираж");
+    ui->paintReserveField->set(_paintCalculationTab->getPaintReserve(), "Запас краски", "кг");
+    ui->pcResultField->set(_paintCalculationTab->getResult(), "Результат вычислений", "кг");
 
-    auto materialTypeComboBox = getComboBox();
-    fillComboBox(*materialTypeComboBox, _paintDataManager->getMaterialTypes());
-    ui->materialTypeField->set(materialTypeComboBox, "Тип материала");
-
-    ui->paintConsumptionField->set(getLineEdit(), "Расход краски", "г/м2");
-    ui->dividerField->set(getLineEdit(), "Делитель");
-    ui->percentageField->set(getLineEdit(), "Процент запечатки", "%");
-    ui->sheetWidthField->set(getLineEdit(), "Ширина печатного листа", "мм");
-    ui->sheetLengthField->set(getLineEdit(), "Длина печатного листа", "мм");
-    ui->circulationField->set(getLineEdit(), "Тираж");
-    ui->paintReserveField->set(getLineEdit(), "Запас краски", "кг");
-
-    ui->pcResultField->set(getLineEdit("", true), "Результат вычислений", "кг");
+    connect(ui->pcCalculateButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::calculate);
+    connect(ui->pcClearFieldsButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::clear);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 
+    delete _configManager;
+
     delete _paintConsumptionDataManager;
     delete _paintDataManager;
     delete _lacquerDataManager;
     delete _foilDataManager;
     delete _foilRollsDataManager;
+
+    delete _paintCalculationTab;
 }
 
+/*
 void MainWindow::on_pcCalculateButton_clicked()
 {
     std::cout << "clicked!\n";
 }
+*/
+
+void MainWindow::paintCalculationDataChanged() {}
 

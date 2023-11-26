@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        PaintCalculationTab.h
+        PaintCalculationTab.cpp
         ${TS_FILES}
 )
 
@@ -69,8 +71,8 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(ColorCalc_GUI)
 endif()
 
-add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc build)
+add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc bin)
 target_link_libraries(${PROJECT_NAME} PRIVATE ColorCalc_lib)
 
-add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc_GUI/NamedField NamedField/build)
+add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc_GUI/NamedField NamedField/bin)
 target_link_libraries(${PROJECT_NAME} PRIVATE NamedField_lib)
