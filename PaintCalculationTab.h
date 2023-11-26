@@ -29,6 +29,17 @@ private slots:
     void update();
     void loadPreset();
 
+    void uploadPaintType();
+    void uploadMaterialType();
+    void uploadPaintConsumption();
+    void uploadDivider();
+    void uploadPercent();
+    void uploadSheetWidth();
+    void uploadSheetLength();
+    void uploadCirculation();
+    void uploadPaintReserve();
+    void uploadResult();
+
 public slots:
     void clear();
     void calculate();
