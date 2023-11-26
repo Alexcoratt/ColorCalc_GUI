@@ -117,25 +117,27 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QPushButton" name="pcCalculateButton">
-            <property name="text">
-             <string>Рассчитать</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="NamedField" name="pcResultField" native="true"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pcClearFieldsButton">
-            <property name="text">
-             <string>Очистить поля</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QWidget" name="horizontalWidget" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,3,2">
+           <item>
+            <widget class="QPushButton" name="pcCalculateButton">
+             <property name="text">
+              <string>Рассчитать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="NamedField" name="pcResultField" native="true"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pcClearFieldsButton">
+             <property name="text">
+              <string>Очистить поля</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
