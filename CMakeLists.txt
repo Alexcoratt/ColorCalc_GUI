@@ -19,8 +19,17 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+
+        itab.h
+
         PaintCalculationTab.h
         PaintCalculationTab.cpp
+
+        presetcreationpopup.h
+        presetcreationpopup.cpp
+
+        presetupdatepopup.h
+        presetupdatepopup.cpp
         ${TS_FILES}
 )
 
@@ -76,3 +85,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ColorCalc_lib)
 
 add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc_GUI/NamedField NamedField/bin)
 target_link_libraries(${PROJECT_NAME} PRIVATE NamedField_lib)
+
+add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc_GUI/PopUp PopUp/bin)
+target_link_libraries(${PROJECT_NAME} PRIVATE PopUp_lib)

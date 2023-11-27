@@ -47,21 +47,21 @@
            <item>
             <layout class="QHBoxLayout" name="pcButtonLayout">
              <item>
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="pcCreatePresetButton">
                <property name="text">
                 <string>Create</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_3">
+              <widget class="QPushButton" name="pcUpdatePresetButton">
                <property name="text">
                 <string>Update</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_2">
+              <widget class="QPushButton" name="pcRemovePresetButton">
                <property name="text">
                 <string>Remove</string>
                </property>

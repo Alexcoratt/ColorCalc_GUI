@@ -163,8 +163,13 @@ void setLineEditValue(QLineEdit * lineEdit, std::function<T()> const & get) {
 }
 
 void PaintCalculationTab::update() {
+    fillComboBox(_presetName, _paintDataManager->getConnection()->getPresetNames());
     setComboBoxIndex(_presetName, [&]() { return _paintDataManager->getName(); });
+
+    fillComboBox(_paintType, _paintDataManager->getPaintTypes());
     setComboBoxIndex(_paintType, [&]() { return _paintDataManager->getPaintType(); });
+
+    fillComboBox(_materialType, _paintDataManager->getMaterialTypes());
     setComboBoxIndex(_materialType, [&]() { return _paintDataManager->getMaterialType(); });
 
     setLineEditValue<double>(_paintConsumption, [&]() { return _paintDataManager->getPaintConsumption(); });
@@ -178,8 +183,8 @@ void PaintCalculationTab::update() {
     std::cout << "PaintCalculationTab: data updated" << std::endl;
 }
 
-void PaintCalculationTab::loadPreset() {
-    std::string presetName{ _presetName->currentText().toStdString() };
+void PaintCalculationTab::loadPreset(QString const & name) {
+    std::string presetName{ name.toStdString() };
     if (presetName.empty())
         return;
 
@@ -332,4 +337,17 @@ void PaintCalculationTab::calculate() {
     } catch (std::exception const & err) {
         std::cerr << err.what() << std::endl;
     }
+}
+
+void PaintCalculationTab::createPreset(QString const & name) {
+    _paintDataManager->createPreset(name.toStdString());
+    update();
+}
+void PaintCalculationTab::updatePreset(QString const & name) {
+    _paintDataManager->updatePreset(name.toStdString());
+    update();
+}
+void PaintCalculationTab::removePreset(QString const & name) {
+    _paintDataManager->removePreset(name.toStdString());
+    update();
 }

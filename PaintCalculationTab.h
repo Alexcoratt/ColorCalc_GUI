@@ -3,11 +3,11 @@
 
 #include <QComboBox>
 #include <QLineEdit>
-#include <QObject>
+#include "itab.h"
 
 #include <PaintDataManager.hpp>
 
-class PaintCalculationTab : public QObject {
+class PaintCalculationTab : public ITab {
 private:
     QComboBox * _presetName;
     QComboBox * _paintType;
@@ -26,9 +26,6 @@ private:
     PaintDataManager * _paintDataManager;
 
 private slots:
-    void update();
-    void loadPreset();
-
     void uploadPaintType();
     void uploadMaterialType();
     void uploadPaintConsumption();
@@ -42,6 +39,8 @@ private slots:
 
 public slots:
     void clear();
+    void update();
+
     void calculate();
 
 public:
@@ -80,6 +79,12 @@ public:
 
     QLineEdit const * getResult() const;
     QLineEdit * getResult();
+
+    void createPreset(QString const & name);
+    void updatePreset(QString const & name);
+    void removePreset(QString const & name);
+
+    void loadPreset(QString const & name);
 };
 
 #endif // PAINTCALCULATIONTAB_H

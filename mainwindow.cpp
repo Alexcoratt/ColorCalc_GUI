@@ -5,17 +5,20 @@
 
 #include <QLineEdit>
 #include <QComboBox>
+#include <QMessageBox>
+
+#include "presetcreationpopup.h"
 
 #include <JSONConfigManager.hpp>
 
-
+void openPresetCreationPopUp(ITab * tab);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    _configManager = new JSONConfigManager{"/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc/data/config.json", false };
+    _configManager = new JSONConfigManager{ "/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc/data/config.json", false };
     auto connections = _configManager->getConnections();
 
     _paintConsumptionDataManager = new PaintConsumptionDataManager{connections.at("paint_consumption")};
@@ -44,6 +47,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pcCalculateButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::calculate);
     connect(ui->pcClearFieldsButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::clear);
+
+    connect(ui->pcCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_paintCalculationTab); });
+}
+
+void openPresetCreationPopUp(ITab * tab) {
+    PresetCreationPopUp popUp(tab, [](std::exception const & err, std::string const & text) {
+        std::cerr << err.what() << std::endl;
+        QMessageBox messageBox;
+        messageBox.setText(QString::fromStdString(text));
+        messageBox.setWindowTitle("Ошибка");
+        messageBox.exec();
+    });
+    popUp.exec();
 }
 
 MainWindow::~MainWindow()
@@ -60,13 +76,4 @@ MainWindow::~MainWindow()
 
     delete _paintCalculationTab;
 }
-
-/*
-void MainWindow::on_pcCalculateButton_clicked()
-{
-    std::cout << "clicked!\n";
-}
-*/
-
-void MainWindow::paintCalculationDataChanged() {}
 

@@ -26,8 +26,6 @@ public:
     ~MainWindow();
 
 private slots:
-    //void on_pcCalculateButton_clicked();
-    void paintCalculationDataChanged();
 
 private:
     Ui::MainWindow *ui;
