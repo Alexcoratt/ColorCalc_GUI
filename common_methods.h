@@ -14,7 +14,8 @@ constexpr char const * COMBO_BOX_PLACEHOLDER{"Не выбрано"};
 
 QLineEdit * getLineEdit(QString const & placeholder = LINE_EDIT_PLACEHOLDER, bool readOnly = false);
 QComboBox * getComboBox(QString const & placeholder = COMBO_BOX_PLACEHOLDER);
-void fillComboBox(QComboBox * comboBox, std::vector<std::string> const & options);
+QComboBox * getComboBox(std::vector<std::string> const & items, QString const & placeholder = COMBO_BOX_PLACEHOLDER);
+void fillComboBox(QComboBox * comboBox, std::vector<std::string> const & items);
 
 void setComboBoxIndex(QComboBox * comboBox, QString const & value);
 void setComboBoxIndex(QComboBox * comboBox, std::function<QString()> get);

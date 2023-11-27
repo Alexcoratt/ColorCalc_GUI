@@ -8,7 +8,6 @@ class ITab : public QObject
 {
     Q_OBJECT
 public:
-    //explicit ITab(QObject *parent = nullptr);
     virtual ~ITab() {}
 
     virtual IDataManager const * getDataManager() const = 0;

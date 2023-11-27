@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="paintTab">
        <property name="locale">
@@ -94,25 +94,25 @@
            <number>6</number>
           </property>
           <item row="1" column="0">
-           <widget class="NamedField" name="dividerField" native="true"/>
+           <widget class="NamedField" name="pcDividerField" native="true"/>
           </item>
           <item row="2" column="0">
-           <widget class="NamedField" name="percentageField" native="true"/>
+           <widget class="NamedField" name="pcPercentageField" native="true"/>
           </item>
           <item row="0" column="0">
-           <widget class="NamedField" name="paintConsumptionField" native="true"/>
+           <widget class="NamedField" name="pcConsumptionField" native="true"/>
           </item>
           <item row="2" column="1">
-           <widget class="NamedField" name="circulationField" native="true"/>
+           <widget class="NamedField" name="pcCirculationField" native="true"/>
           </item>
           <item row="1" column="1">
-           <widget class="NamedField" name="sheetLengthField" native="true"/>
+           <widget class="NamedField" name="pcSheetLengthField" native="true"/>
           </item>
           <item row="0" column="1">
-           <widget class="NamedField" name="sheetWidthField" native="true"/>
+           <widget class="NamedField" name="pcSheetWidthField" native="true"/>
           </item>
           <item row="3" column="1">
-           <widget class="NamedField" name="paintReserveField" native="true"/>
+           <widget class="NamedField" name="pcPaintReserveField" native="true"/>
           </item>
          </layout>
         </item>
@@ -145,6 +145,88 @@
        <attribute name="title">
         <string>Расчет лака</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1,0">
+        <item>
+         <layout class="QHBoxLayout" name="lcComboBoxLayout">
+          <item>
+           <widget class="NamedField" name="lacquerPresetField" native="true"/>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="lcButtonLayout">
+            <item>
+             <widget class="QPushButton" name="lcCreatePresetButton">
+              <property name="text">
+               <string>Create</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="lcUpdatePresetButton">
+              <property name="text">
+               <string>Update</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="lcRemovePresetButton">
+              <property name="text">
+               <string>Remove</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0">
+          <property name="horizontalSpacing">
+           <number>64</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>6</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="NamedField" name="lcConsumptionField" native="true"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="NamedField" name="lcSheetWidthField" native="true"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="NamedField" name="lcPercentageField" native="true"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="NamedField" name="lcCirculationField" native="true"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="NamedField" name="lcSheetLengthField" native="true"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QWidget" name="horizontalWidget_2" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="2,3,2">
+           <item>
+            <widget class="QPushButton" name="lcCalculateButton">
+             <property name="text">
+              <string>Рассчитать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="NamedField" name="lcResultField" native="true"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="lcClearFieldsButton">
+             <property name="text">
+              <string>Очистить поля</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="foilTab">
        <attribute name="title">

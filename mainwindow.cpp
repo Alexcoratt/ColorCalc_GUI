@@ -54,18 +54,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     // setting up paint calculation tab
     ui->paintPresetField->set(_paintCalculationTab->getPresetName(), "Имя пресета");
-
-    //connect(paintCalculationPresetComboBox.get(), &QComboBox::currentTextChanged, this, &MainWindow::on_pcCalculateButton_clicked);
     ui->paintTypeField->set(_paintCalculationTab->getPaintType(), "Тип краски");
     ui->materialTypeField->set(_paintCalculationTab->getMaterialType(), "Тип материала");
 
-    ui->paintConsumptionField->set(_paintCalculationTab->getPaintConsumption(), "Расход краски", "г/м2");
-    ui->dividerField->set(_paintCalculationTab->getDivider(), "Делитель");
-    ui->percentageField->set(_paintCalculationTab->getPercent(), "Процент запечатки", "%");
-    ui->sheetWidthField->set(_paintCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
-    ui->sheetLengthField->set(_paintCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
-    ui->circulationField->set(_paintCalculationTab->getCirculation(), "Тираж");
-    ui->paintReserveField->set(_paintCalculationTab->getPaintReserve(), "Запас краски", "кг");
+    ui->pcConsumptionField->set(_paintCalculationTab->getPaintConsumption(), "Расход краски", "г/м2");
+    ui->pcDividerField->set(_paintCalculationTab->getDivider(), "Делитель");
+    ui->pcPercentageField->set(_paintCalculationTab->getPercent(), "Процент запечатки", "%");
+    ui->pcSheetWidthField->set(_paintCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
+    ui->pcSheetLengthField->set(_paintCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
+    ui->pcCirculationField->set(_paintCalculationTab->getCirculation(), "Тираж");
+    ui->pcPaintReserveField->set(_paintCalculationTab->getPaintReserve(), "Запас краски", "кг");
     ui->pcResultField->set(_paintCalculationTab->getResult(), "Результат вычислений", "кг");
 
     connect(ui->pcCalculateButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::calculate);
@@ -74,6 +72,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pcCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_paintCalculationTab); });
     connect(ui->pcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_paintCalculationTab); });
     connect(ui->pcRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_paintCalculationTab); });
+
+
 }
 
 MainWindow::~MainWindow()

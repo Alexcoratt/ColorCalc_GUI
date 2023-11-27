@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "PaintCalculationTab.h"
+#include "paintcalculationtab.h"
 #include "common_methods.h"
 
 namespace cm = common_methods;
@@ -56,6 +56,7 @@ PaintCalculationTab::~PaintCalculationTab() {
     delete _sheetLength;
     delete _circulation;
     delete _paintReserve;
+    delete _result;
 }
 
 PaintDataManager const * PaintCalculationTab::getDataManager() const { return _paintDataManager; }

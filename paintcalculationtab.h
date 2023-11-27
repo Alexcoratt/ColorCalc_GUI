@@ -8,6 +8,8 @@
 #include <PaintDataManager.hpp>
 
 class PaintCalculationTab : public ITab {
+    Q_OBJECT
+
 private:
     QComboBox * _presetName;
     QComboBox * _paintType;
@@ -35,7 +37,6 @@ private slots:
     void uploadSheetLength();
     void uploadCirculation();
     void uploadPaintReserve();
-    void uploadResult();
 
 public slots:
     void clear();

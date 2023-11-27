@@ -11,7 +11,8 @@
 #include <FoilDataManager.hpp>
 #include <FoilRollsDataManager.hpp>
 
-#include "PaintCalculationTab.h"
+#include "paintcalculationtab.h"
+#include "lacquercalculationtab.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -39,5 +40,6 @@ private:
     FoilRollsDataManager * _foilRollsDataManager;
 
     PaintCalculationTab * _paintCalculationTab;
+    LacquerCalculationTab * _lacquerCalculationTab;
 };
 #endif // MAINWINDOW_H

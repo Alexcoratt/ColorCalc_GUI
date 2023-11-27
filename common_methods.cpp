@@ -13,9 +13,15 @@ QComboBox * common_methods::getComboBox(QString const & placeholder) {
     return comboBox;
 }
 
-void common_methods::fillComboBox(QComboBox * comboBox, std::vector<std::string> const & options) {
+QComboBox * getComboBox(std::vector<std::string> const & items, QString const & placeholder) {
+    QComboBox * comboBox = common_methods::getComboBox(placeholder);
+    common_methods::fillComboBox(comboBox, items);
+    return comboBox;
+}
+
+void common_methods::fillComboBox(QComboBox * comboBox, std::vector<std::string> const & items) {
     comboBox->clear();
-    for (auto const & option : options)
+    for (auto const & option : items)
         comboBox->addItem(option.c_str());
 }
 

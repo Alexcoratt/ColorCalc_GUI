@@ -24,8 +24,11 @@ set(PROJECT_SOURCES
         common_methods.h
         common_methods.cpp
 
-        PaintCalculationTab.h
-        PaintCalculationTab.cpp
+        paintcalculationtab.h
+        paintcalculationtab.cpp
+
+        lacquercalculationtab.h
+        lacquercalculationtab.cpp
 
         presetcreationpopup.h
         presetcreationpopup.cpp
