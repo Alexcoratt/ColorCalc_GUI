@@ -8,10 +8,12 @@
 #include <QMessageBox>
 
 #include "presetcreationpopup.h"
+#include "presetupdatepopup.h"
 
 #include <JSONConfigManager.hpp>
 
 void openPresetCreationPopUp(ITab * tab);
+void openPresetUpdatePopUp(ITab * tab);
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -49,16 +51,24 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pcClearFieldsButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::clear);
 
     connect(ui->pcCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_paintCalculationTab); });
+    connect(ui->pcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_paintCalculationTab); });
+}
+
+void exceptionHandler(std::exception const & err, std::string const & text) {
+    std::cerr << err.what() << std::endl;
+    QMessageBox messageBox;
+    messageBox.setText(QString::fromStdString(text));
+    messageBox.setWindowTitle("Ошибка");
+    messageBox.exec();
 }
 
 void openPresetCreationPopUp(ITab * tab) {
-    PresetCreationPopUp popUp(tab, [](std::exception const & err, std::string const & text) {
-        std::cerr << err.what() << std::endl;
-        QMessageBox messageBox;
-        messageBox.setText(QString::fromStdString(text));
-        messageBox.setWindowTitle("Ошибка");
-        messageBox.exec();
-    });
+    PresetCreationPopUp popUp(tab, exceptionHandler);
+    popUp.exec();
+}
+
+void openPresetUpdatePopUp(ITab * tab) {
+    PresetUpdatePopUp popUp(tab, exceptionHandler);
     popUp.exec();
 }
 

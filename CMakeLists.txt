@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
 
         itab.h
+        common_methods.h
+        common_methods.cpp
 
         PaintCalculationTab.h
         PaintCalculationTab.cpp

@@ -41,11 +41,20 @@ public slots:
     void clear();
     void update();
 
+    void createPreset(QString const & name);
+    void updatePreset(QString const & name);
+    void removePreset(QString const & name);
+
+    void loadPreset(QString const & name);
+
     void calculate();
 
 public:
     PaintCalculationTab(PaintDataManager *);
     ~PaintCalculationTab();
+
+    PaintDataManager const * getDataManager() const;
+    PaintDataManager * getDataManager();
 
     QComboBox const * getPresetName() const;
     QComboBox * getPresetName();
@@ -79,12 +88,6 @@ public:
 
     QLineEdit const * getResult() const;
     QLineEdit * getResult();
-
-    void createPreset(QString const & name);
-    void updatePreset(QString const & name);
-    void removePreset(QString const & name);
-
-    void loadPreset(QString const & name);
 };
 
 #endif // PAINTCALCULATIONTAB_H

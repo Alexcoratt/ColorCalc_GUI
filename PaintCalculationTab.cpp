@@ -2,66 +2,47 @@
 #include <sstream>
 
 #include "PaintCalculationTab.h"
+#include "common_methods.h"
 
-#define LINE_EDIT_PLACEHOLDER "Введите значение"
-#define COMBO_BOX_PLACEHOLDER "Не выбрано"
-
-QLineEdit * getLineEdit(QString const & placeholder = LINE_EDIT_PLACEHOLDER, bool readOnly = false) {
-    QLineEdit * lineEdit = new QLineEdit ;
-    lineEdit->setPlaceholderText(placeholder);
-    lineEdit->setReadOnly(readOnly);
-    return lineEdit;
-}
-
-QComboBox * getComboBox(QString const & placeholder = COMBO_BOX_PLACEHOLDER) {
-    QComboBox * comboBox = new QComboBox;
-    comboBox->setPlaceholderText(placeholder);
-    return comboBox;
-}
-
-void fillComboBox(QComboBox * comboBox, std::vector<std::string> const & options) {
-    comboBox->clear();
-    for (auto const & option : options)
-        comboBox->addItem(option.c_str());
-}
+namespace cm = common_methods;
 
 PaintCalculationTab::PaintCalculationTab(PaintDataManager * mgr) {
     _paintDataManager = mgr;
 
-    _presetName = getComboBox();
-    fillComboBox(_presetName, _paintDataManager->getConnection()->getPresetNames());
+    _presetName = cm::getComboBox();
+    cm::fillComboBox(_presetName, _paintDataManager->getConnection()->getPresetNames());
     connect(_presetName, &QComboBox::currentTextChanged, this, &PaintCalculationTab::loadPreset);
 
-    _paintType = getComboBox();
-    fillComboBox(_paintType, _paintDataManager->getPaintTypes());
+    _paintType = cm::getComboBox();
+    cm::fillComboBox(_paintType, _paintDataManager->getPaintTypes());
     connect(_paintType, &QComboBox::currentTextChanged, this, &PaintCalculationTab::uploadPaintType);
 
-    _materialType = getComboBox();
-    fillComboBox(_materialType, _paintDataManager->getMaterialTypes());
+    _materialType = cm::getComboBox();
+    cm::fillComboBox(_materialType, _paintDataManager->getMaterialTypes());
     connect(_materialType, &QComboBox::currentTextChanged, this, &PaintCalculationTab::uploadMaterialType);
 
-    _paintConsumption = getLineEdit();
+    _paintConsumption = cm::getLineEdit();
     connect(_paintConsumption, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadPaintConsumption);
 
-    _divider = getLineEdit();
+    _divider = cm::getLineEdit();
     connect(_divider, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadDivider);
 
-    _percent = getLineEdit();
+    _percent = cm::getLineEdit();
     connect(_percent, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadPercent);
 
-    _sheetWidth = getLineEdit();
+    _sheetWidth = cm::getLineEdit();
     connect(_sheetWidth, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadSheetWidth);
 
-    _sheetLength = getLineEdit();
+    _sheetLength = cm::getLineEdit();
     connect(_sheetLength, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadSheetLength);
 
-    _circulation = getLineEdit();
+    _circulation = cm::getLineEdit();
     connect(_circulation, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadCirculation);
 
-    _paintReserve = getLineEdit();
+    _paintReserve = cm::getLineEdit();
     connect(_paintReserve, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadPaintReserve);
 
-    _result = getLineEdit("", true);
+    _result = cm::getLineEdit("", true);
 }
 
 PaintCalculationTab::~PaintCalculationTab() {
@@ -76,6 +57,9 @@ PaintCalculationTab::~PaintCalculationTab() {
     delete _circulation;
     delete _paintReserve;
 }
+
+PaintDataManager const * PaintCalculationTab::getDataManager() const { return _paintDataManager; }
+PaintDataManager * PaintCalculationTab::getDataManager() { return _paintDataManager; }
 
 QComboBox const * PaintCalculationTab::getPresetName() const { return _presetName; }
 QComboBox * PaintCalculationTab::getPresetName() { return _presetName; }
@@ -110,75 +94,23 @@ QLineEdit * PaintCalculationTab::getPaintReserve() { return _paintReserve; }
 QLineEdit const * PaintCalculationTab::getResult() const { return _result; }
 QLineEdit * PaintCalculationTab::getResult() { return _result; }
 
-void setComboBoxIndex(QComboBox * comboBox, QString const & value) {
-    QSignalBlocker blocker(comboBox);
-    comboBox->setCurrentIndex(comboBox->findText(value));
-    blocker.unblock();
-}
-
-void setComboBoxIndex(QComboBox * comboBox, std::function<QString()> get) {
-    try {
-        setComboBoxIndex(comboBox, get());
-    } catch (std::exception const & err) {
-        comboBox->setCurrentIndex(-1);
-        std::cerr << err.what() << std::endl;
-    }
-}
-
-void setComboBoxIndex(QComboBox * comboBox, std::function<std::string()> get) {
-    try {
-        setComboBoxIndex(comboBox, QString::fromStdString(get()));
-    } catch (std::exception const & err) {
-        comboBox->setCurrentIndex(-1);
-        std::cerr << err.what() << std::endl;
-    }
-}
-
-template<typename T>
-std::string toString(T const & n) {
-    std::ostringstream oss;
-    oss << n;
-    std::string s =  oss.str();
-    int dotpos = s.find_first_of('.');
-    if(dotpos!=std::string::npos){
-        int ipos = s.size()-1;
-        while(s[ipos]=='0' && ipos>dotpos){
-            --ipos;
-        }
-        s.erase ( ipos + 1, std::string::npos );
-    }
-    return s;
-}
-
-template <typename T>
-void setLineEditValue(QLineEdit * lineEdit, std::function<T()> const & get) {
-    QSignalBlocker blocker(lineEdit);
-    try {
-        lineEdit->setText(QString::fromStdString(toString(get())));
-    } catch (std::exception const & err) {
-        lineEdit->clear();
-        std::cerr << err.what() << std::endl;
-    }
-    blocker.unblock();
-}
-
 void PaintCalculationTab::update() {
-    fillComboBox(_presetName, _paintDataManager->getConnection()->getPresetNames());
-    setComboBoxIndex(_presetName, [&]() { return _paintDataManager->getName(); });
+    cm::fillComboBox(_presetName, _paintDataManager->getConnection()->getPresetNames());
+    cm::setComboBoxIndex(_presetName, [&]() { return _paintDataManager->getName(); });
 
-    fillComboBox(_paintType, _paintDataManager->getPaintTypes());
-    setComboBoxIndex(_paintType, [&]() { return _paintDataManager->getPaintType(); });
+    cm::fillComboBox(_paintType, _paintDataManager->getPaintTypes());
+    cm::setComboBoxIndex(_paintType, [&]() { return _paintDataManager->getPaintType(); });
 
-    fillComboBox(_materialType, _paintDataManager->getMaterialTypes());
-    setComboBoxIndex(_materialType, [&]() { return _paintDataManager->getMaterialType(); });
+    cm::fillComboBox(_materialType, _paintDataManager->getMaterialTypes());
+    cm::setComboBoxIndex(_materialType, [&]() { return _paintDataManager->getMaterialType(); });
 
-    setLineEditValue<double>(_paintConsumption, [&]() { return _paintDataManager->getPaintConsumption(); });
-    setLineEditValue<double>(_divider, [&]() { return _paintDataManager->getDivider(); });
-    setLineEditValue<double>(_percent, [&]() { return _paintDataManager->getPercentage(); });
-    setLineEditValue<double>(_sheetWidth, [&]() { return _paintDataManager->getSheetWidth(); });
-    setLineEditValue<double>(_sheetLength, [&]() { return _paintDataManager->getSheetLength(); });
-    setLineEditValue<unsigned long>(_circulation, [&]() { return _paintDataManager->getCirculation(); });
-    setLineEditValue<double>(_paintReserve, [&]() { return _paintDataManager->getPaintReserve(); });
+    cm::setLineEditValue<double>(_paintConsumption, [&]() { return _paintDataManager->getPaintConsumption(); });
+    cm::setLineEditValue<double>(_divider, [&]() { return _paintDataManager->getDivider(); });
+    cm::setLineEditValue<double>(_percent, [&]() { return _paintDataManager->getPercentage(); });
+    cm::setLineEditValue<double>(_sheetWidth, [&]() { return _paintDataManager->getSheetWidth(); });
+    cm::setLineEditValue<double>(_sheetLength, [&]() { return _paintDataManager->getSheetLength(); });
+    cm::setLineEditValue<unsigned long>(_circulation, [&]() { return _paintDataManager->getCirculation(); });
+    cm::setLineEditValue<double>(_paintReserve, [&]() { return _paintDataManager->getPaintReserve(); });
 
     std::cout << "PaintCalculationTab: data updated" << std::endl;
 }
@@ -221,106 +153,79 @@ void PaintCalculationTab::uploadMaterialType() {
     update();
 }
 
-template <typename T, typename V>
-void setManagerParam(std::function<void(T)> const & set, std::function<void()> const & clear, V const & value, std::function<T(V)> const & converter) {
-    try {
-        set(converter(value));
-        std::cout << "OK" << std::endl;
-    } catch (std::exception const & err) {
-        clear();
-        std::cout << err.what() << std::endl;
-    }
-}
-
-double toDouble(QString const & line) {
-    bool isCorrect;
-    auto res = line.toDouble(&isCorrect);
-    if (isCorrect)
-        return res;
-    throw std::invalid_argument("toDouble: invalid line \"" + line.toStdString() + "\"");
-}
-
-double toULong(QString const & line) {
-    bool isCorrect;
-    auto res = line.toULong(&isCorrect);
-    if (isCorrect)
-        return res;
-    throw std::invalid_argument("toULong: invalid line \"" + line.toStdString() + "\"");
-}
-
 void PaintCalculationTab::uploadPaintConsumption() {
     std::cout << "uploading paint consumption\t";
-    setManagerParam<double, QString>(
+    cm::setManagerParam<double, QString>(
         [&](double value) { _paintDataManager->setPaintConsumption(value); },
         [&]() { _paintDataManager->clearPaintConsumption(); },
         _paintConsumption->text(),
-        [&](QString line) { return toDouble(line); }
+        [&](QString line) { return cm::toDouble(line); }
     );
     update();
 }
 
 void PaintCalculationTab::uploadDivider() {
     std::cout << "uploading divider\t";
-    setManagerParam<double, QString>(
+    cm::setManagerParam<double, QString>(
         [&](double value) { _paintDataManager->setDivider(value); },
         [&]() { _paintDataManager->clearDivider(); },
         _divider->text(),
-        [&](QString line) { return toDouble(line); }
+        [&](QString line) { return cm::toDouble(line); }
     );
     update();
 }
 
 void PaintCalculationTab::uploadPercent() {
     std::cout << "uploading divider\t";
-    setManagerParam<double, QString>(
+    cm::setManagerParam<double, QString>(
         [&](double value) { _paintDataManager->setPercentage(value); },
         [&]() { _paintDataManager->clearPercentage(); },
         _percent->text(),
-        [&](QString line) { return toDouble(line); }
+        [&](QString line) { return cm::toDouble(line); }
     );
     update();
 }
 
 void PaintCalculationTab::uploadSheetWidth() {
     std::cout << "uploading sheet width\t";
-    setManagerParam<double, QString>(
+    cm::setManagerParam<double, QString>(
         [&](double value) { _paintDataManager->setSheetWidth(value); },
         [&]() { _paintDataManager->clearSheetWidth(); },
         _sheetWidth->text(),
-        [&](QString line) { return toDouble(line); }
+        [&](QString line) { return cm::toDouble(line); }
     );
     update();
 }
 
 void PaintCalculationTab::uploadSheetLength() {
     std::cout << "uploading sheet length\t";
-    setManagerParam<double, QString>(
+    cm::setManagerParam<double, QString>(
         [&](double value) { _paintDataManager->setSheetLength(value); },
         [&]() { _paintDataManager->clearSheetLength(); },
         _sheetLength->text(),
-        [&](QString line) { return toDouble(line); }
+        [&](QString line) { return cm::toDouble(line); }
     );
     update();
 }
 
 void PaintCalculationTab::uploadCirculation() {
     std::cout << "uploading circulation\t";
-    setManagerParam<unsigned long, QString>(
+    cm::setManagerParam<unsigned long, QString>(
         [&](unsigned long value) { _paintDataManager->setCirculation(value); },
         [&]() { _paintDataManager->clearCirculation(); },
         _circulation->text(),
-        [&](QString line) { return toULong(line); }
+        [&](QString line) { return cm::toULong(line); }
     );
     update();
 }
 
 void PaintCalculationTab::uploadPaintReserve() {
     std::cout << "uploading paint reserve\t";
-    setManagerParam<double, QString>(
+    cm::setManagerParam<double, QString>(
         [&](double value) { _paintDataManager->setPaintReserve(value); },
         [&]() { _paintDataManager->clearPaintReserve(); },
         _paintReserve->text(),
-        [&](QString line) { return toDouble(line); }
+        [&](QString line) { return cm::toDouble(line); }
     );
     update();
 }
@@ -333,7 +238,7 @@ void PaintCalculationTab::clear() {
 
 void PaintCalculationTab::calculate() {
     try {
-        _result->setText(QString::fromStdString(toString(_paintDataManager->calculate())));
+        _result->setText(QString::fromStdString(cm::toString(_paintDataManager->calculate())));
     } catch (std::exception const & err) {
         std::cerr << err.what() << std::endl;
     }
