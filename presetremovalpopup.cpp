@@ -1,8 +1,9 @@
-#include "presetupdatepopup.h"
+#include "presetremovalpopup.h"
 #include "common_methods.h"
+
 #include <PresetDoesNotExistException.hpp>
 
-PresetUpdatePopUp::PresetUpdatePopUp(ITab * tab, std::function<void(std::exception const &, std::string const &)> const & exceptionHandler, QWidget *parent)
+PresetRemovalPopUp::PresetRemovalPopUp(ITab * tab, std::function<void(std::exception const &, std::string const &)> const & exceptionHandler, QWidget *parent)
     : InputPopUp{parent}
 {
     _comboBox = common_methods::getComboBox();
@@ -12,16 +13,16 @@ PresetUpdatePopUp::PresetUpdatePopUp(ITab * tab, std::function<void(std::excepti
     _exceptionHandler = exceptionHandler;
     _tab = tab;
 
-    setWindowTitle("Обновить пресет");
-    setInfo("Выберите имя пресета, который хотите обновить");
+    setWindowTitle("Удалить пресет");
+    setInfo("Выберите имя пресета, который хотите удалить");
     _comboBox->setPlaceholderText("Не выбрано");
     _comboBox->setCurrentIndex(-1);
 
-    connect(this, &InputPopUp::accepted, this, &PresetUpdatePopUp::accept);
+    connect(this, &InputPopUp::accepted, this, &PresetRemovalPopUp::accept);
     connect(this, &InputPopUp::rejected, this, &QDialog::close);
 }
 
-void PresetUpdatePopUp::accept() {
+void PresetRemovalPopUp::accept() {
     try {
         if (!_tab)
             throw std::runtime_error("PresetCreationPopUpManager: DataManager is undefined");
@@ -29,7 +30,7 @@ void PresetUpdatePopUp::accept() {
         if (_comboBox->currentIndex() == -1)
             throw std::invalid_argument("PresetCreationPopUpManager: preset name is not selected");
 
-        _tab->updatePreset(_comboBox->currentText());
+        _tab->removePreset(_comboBox->currentText());
         close();
     } catch(std::runtime_error const & err) {
         _exceptionHandler(err, "Менеджер данных не установлен");

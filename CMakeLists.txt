@@ -32,6 +32,9 @@ set(PROJECT_SOURCES
 
         presetupdatepopup.h
         presetupdatepopup.cpp
+
+        presetremovalpopup.h
+        presetremovalpopup.cpp
         ${TS_FILES}
 )
 
