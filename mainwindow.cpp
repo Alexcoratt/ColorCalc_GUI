@@ -50,9 +50,9 @@ MainWindow::MainWindow(QWidget *parent)
     _foilRollsDataManager = new FoilRollsDataManager{connections.at("foil_rolls")};
     _foilDataManager = new FoilDataManager{connections.at("foil_calculation"), _foilRollsDataManager};
 
+    // setting up paint calculation tab
     _paintCalculationTab = new PaintCalculationTab(_paintDataManager);
 
-    // setting up paint calculation tab
     ui->paintPresetField->set(_paintCalculationTab->getPresetName(), "Имя пресета");
     ui->paintTypeField->set(_paintCalculationTab->getPaintType(), "Тип краски");
     ui->materialTypeField->set(_paintCalculationTab->getMaterialType(), "Тип материала");
@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pcSheetLengthField->set(_paintCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
     ui->pcCirculationField->set(_paintCalculationTab->getCirculation(), "Тираж");
     ui->pcPaintReserveField->set(_paintCalculationTab->getPaintReserve(), "Запас краски", "кг");
-    ui->pcResultField->set(_paintCalculationTab->getResult(), "Результат вычислений", "кг");
+    ui->pcResultField->set(_paintCalculationTab->getResult(), "Объем краски", "кг");
 
     connect(ui->pcCalculateButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::calculate);
     connect(ui->pcClearFieldsButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::clear);
@@ -73,7 +73,24 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_paintCalculationTab); });
     connect(ui->pcRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_paintCalculationTab); });
 
+    // setting up lacquer calculation tab
+    _lacquerCalculationTab = new LacquerCalculationTab(_lacquerDataManager);
 
+    ui->lacquerPresetField->set(_lacquerCalculationTab->getPresetName(), "Имя пресета");
+
+    ui->lcConsumptionField->set(_lacquerCalculationTab->getLacquerConsumption(), "Расход краски", "г/м2");
+    ui->lcPercentageField->set(_lacquerCalculationTab->getPercentage(), "Процент заливки", "%");
+    ui->lcSheetWidthField->set(_lacquerCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
+    ui->lcSheetLengthField->set(_lacquerCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
+    ui->lcCirculationField->set(_lacquerCalculationTab->getCirculation(), "Тираж");
+    ui->lcResultField->set(_lacquerCalculationTab->getResult(), "Объем лака", "кг");
+
+    connect(ui->lcCalculateButton, &QPushButton::clicked, _lacquerCalculationTab, &LacquerCalculationTab::calculate);
+    connect(ui->lcClearFieldsButton, &QPushButton::clicked, _lacquerCalculationTab, &LacquerCalculationTab::clear);
+
+    connect(ui->lcCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_lacquerCalculationTab); });
+    connect(ui->lcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_lacquerCalculationTab); });
+    connect(ui->lcRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_lacquerCalculationTab); });
 }
 
 MainWindow::~MainWindow()

@@ -42,7 +42,7 @@ PaintCalculationTab::PaintCalculationTab(PaintDataManager * mgr) {
     _paintReserve = cm::getLineEdit();
     connect(_paintReserve, &QLineEdit::editingFinished, this, &PaintCalculationTab::uploadPaintReserve);
 
-    _result = cm::getLineEdit("", true);
+    _result = cm::getLineEdit("Расчет не выполнен", true);
 }
 
 PaintCalculationTab::~PaintCalculationTab() {
@@ -113,6 +113,8 @@ void PaintCalculationTab::update() {
     cm::setLineEditValue<unsigned long>(_circulation, [&]() { return _paintDataManager->getCirculation(); });
     cm::setLineEditValue<double>(_paintReserve, [&]() { return _paintDataManager->getPaintReserve(); });
 
+    calculate();
+
     std::cout << "PaintCalculationTab: data updated" << std::endl;
 }
 
@@ -160,7 +162,7 @@ void PaintCalculationTab::uploadPaintConsumption() {
         [&](double value) { _paintDataManager->setPaintConsumption(value); },
         [&]() { _paintDataManager->clearPaintConsumption(); },
         _paintConsumption->text(),
-        [&](QString line) { return cm::toDouble(line); }
+        cm::toDouble
     );
     update();
 }
@@ -171,7 +173,7 @@ void PaintCalculationTab::uploadDivider() {
         [&](double value) { _paintDataManager->setDivider(value); },
         [&]() { _paintDataManager->clearDivider(); },
         _divider->text(),
-        [&](QString line) { return cm::toDouble(line); }
+        cm::toDouble
     );
     update();
 }
@@ -182,7 +184,7 @@ void PaintCalculationTab::uploadPercent() {
         [&](double value) { _paintDataManager->setPercentage(value); },
         [&]() { _paintDataManager->clearPercentage(); },
         _percent->text(),
-        [&](QString line) { return cm::toDouble(line); }
+        cm::toDouble
     );
     update();
 }
@@ -193,7 +195,7 @@ void PaintCalculationTab::uploadSheetWidth() {
         [&](double value) { _paintDataManager->setSheetWidth(value); },
         [&]() { _paintDataManager->clearSheetWidth(); },
         _sheetWidth->text(),
-        [&](QString line) { return cm::toDouble(line); }
+        cm::toDouble
     );
     update();
 }
@@ -204,7 +206,7 @@ void PaintCalculationTab::uploadSheetLength() {
         [&](double value) { _paintDataManager->setSheetLength(value); },
         [&]() { _paintDataManager->clearSheetLength(); },
         _sheetLength->text(),
-        [&](QString line) { return cm::toDouble(line); }
+        cm::toDouble
     );
     update();
 }
@@ -215,7 +217,7 @@ void PaintCalculationTab::uploadCirculation() {
         [&](unsigned long value) { _paintDataManager->setCirculation(value); },
         [&]() { _paintDataManager->clearCirculation(); },
         _circulation->text(),
-        [&](QString line) { return cm::toULong(line); }
+        cm::toULong
     );
     update();
 }
@@ -226,7 +228,7 @@ void PaintCalculationTab::uploadPaintReserve() {
         [&](double value) { _paintDataManager->setPaintReserve(value); },
         [&]() { _paintDataManager->clearPaintReserve(); },
         _paintReserve->text(),
-        [&](QString line) { return cm::toDouble(line); }
+        cm::toDouble
     );
     update();
 }
@@ -241,6 +243,7 @@ void PaintCalculationTab::calculate() {
     try {
         _result->setText(QString::fromStdString(cm::toString(_paintDataManager->calculate())));
     } catch (std::exception const & err) {
+        _result->clear();
         std::cerr << err.what() << std::endl;
     }
 }
