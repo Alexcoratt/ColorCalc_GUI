@@ -63,11 +63,6 @@ QLineEdit const * LacquerCalculationTab::getResult() const { return _result; }
 QLineEdit * LacquerCalculationTab::getResult() { return _result; }
 
 // public slots
-void LacquerCalculationTab::clear() {
-    _lacquerDataManager->clear();
-    update();
-}
-
 void LacquerCalculationTab::update() {
     cm::fillComboBox(_presetName, _lacquerDataManager->getConnection()->getPresetNames());
     cm::setComboBoxIndex(_presetName, [&]() { return _lacquerDataManager->getName(); });
@@ -80,29 +75,7 @@ void LacquerCalculationTab::update() {
 
     calculate();
 
-    std::cout << "LacquerCalculationTab: data updated" << std::endl;
-}
-
-void LacquerCalculationTab::createPreset(QString const & name) {
-    _lacquerDataManager->createPreset(name.toStdString());
-    update();
-}
-void LacquerCalculationTab::updatePreset(QString const & name) {
-    _lacquerDataManager->updatePreset(name.toStdString());
-    update();
-}
-void LacquerCalculationTab::removePreset(QString const & name) {
-    _lacquerDataManager->removePreset(name.toStdString());
-    update();
-}
-
-void LacquerCalculationTab::loadPreset(QString const & name) {
-    std::string presetName{ name.toStdString() };
-    if (presetName.empty())
-        return;
-
-    _lacquerDataManager->loadPreset(presetName);
-    update();
+    std::cout << "LacquerCalculationTab: updated" << std::endl;
 }
 
 void LacquerCalculationTab::calculate() {

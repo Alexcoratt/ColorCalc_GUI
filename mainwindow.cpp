@@ -91,6 +91,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->lcCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_lacquerCalculationTab); });
     connect(ui->lcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_lacquerCalculationTab); });
     connect(ui->lcRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_lacquerCalculationTab); });
+
+    // setting up foil calculation tab
+    _foilCalculationTab = new FoilCalculationTab(_foilDataManager);
+
+    ui->foilPresetField->set(_foilCalculationTab->getPresetName(), "Имя пресета");
+
+    ui->fcLengthField->set(_foilCalculationTab->getLength(), "Длина клише", "мм");
+    ui->fcLengthReserveField->set(_foilCalculationTab->getLengthReserve(), "Запас по длине", "мм");
+    ui->fcWidthField->set(_foilCalculationTab->getWidth(), "Ширина клише", "мм");
+    ui->fcWidthReserveField->set(_foilCalculationTab->getWidthReserve(), "Запас по ширине", "мм");
+    ui->fcSheetNumberField->set(_foilCalculationTab->getSheetNumber(), "Число печатных листов");
+    ui->fcCirculationField->set(_foilCalculationTab->getCirculation(), "Тираж");
+    ui->fcResultField->set(_foilCalculationTab->getResult(), "Погонные метры", "м");
+
+    connect(ui->fcCalculateButton, &QPushButton::clicked, _foilCalculationTab, &FoilCalculationTab::calculate);
+    connect(ui->fcClearFieldsButton, &QPushButton::clicked, _foilCalculationTab, &FoilCalculationTab::clear);
+
+    connect(ui->fcCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_foilCalculationTab); });
+    connect(ui->fcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_foilCalculationTab); });
+    connect(ui->fcRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_foilCalculationTab); });
 }
 
 MainWindow::~MainWindow()

@@ -13,6 +13,7 @@
 
 #include "paintcalculationtab.h"
 #include "lacquercalculationtab.h"
+#include "foilcalculationtab.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,5 +42,6 @@ private:
 
     PaintCalculationTab * _paintCalculationTab;
     LacquerCalculationTab * _lacquerCalculationTab;
+    FoilCalculationTab * _foilCalculationTab;
 };
 #endif // MAINWINDOW_H

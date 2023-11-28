@@ -12,6 +12,7 @@ PaintCalculationTab::PaintCalculationTab(PaintDataManager * mgr) {
     _presetName = cm::getComboBox();
     cm::fillComboBox(_presetName, _paintDataManager->getConnection()->getPresetNames());
     connect(_presetName, &QComboBox::currentTextChanged, this, &PaintCalculationTab::loadPreset);
+    _presetName->setMaximumWidth(256);
 
     _paintType = cm::getComboBox();
     cm::fillComboBox(_paintType, _paintDataManager->getPaintTypes());
@@ -116,16 +117,6 @@ void PaintCalculationTab::update() {
     calculate();
 
     std::cout << "PaintCalculationTab: data updated" << std::endl;
-}
-
-void PaintCalculationTab::loadPreset(QString const & name) {
-    std::string presetName{ name.toStdString() };
-    if (presetName.empty())
-        return;
-
-    _paintDataManager->loadPreset(presetName);
-    std::cout << "PaintCalculationTab: preset named \"" << presetName << "\" selected" << std::endl;
-    update();
 }
 
 void PaintCalculationTab::uploadPaintType() {
@@ -233,12 +224,6 @@ void PaintCalculationTab::uploadPaintReserve() {
     update();
 }
 
-void PaintCalculationTab::clear() {
-    _paintDataManager->clear();
-    std::cout << "PaintCalculationTab: fields cleared" << std::endl;
-    update();
-}
-
 void PaintCalculationTab::calculate() {
     try {
         _result->setText(QString::fromStdString(cm::toString(_paintDataManager->calculate())));
@@ -246,17 +231,4 @@ void PaintCalculationTab::calculate() {
         _result->clear();
         std::cerr << err.what() << std::endl;
     }
-}
-
-void PaintCalculationTab::createPreset(QString const & name) {
-    _paintDataManager->createPreset(name.toStdString());
-    update();
-}
-void PaintCalculationTab::updatePreset(QString const & name) {
-    _paintDataManager->updatePreset(name.toStdString());
-    update();
-}
-void PaintCalculationTab::removePreset(QString const & name) {
-    _paintDataManager->removePreset(name.toStdString());
-    update();
 }

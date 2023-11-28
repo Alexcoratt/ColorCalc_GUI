@@ -14,14 +14,15 @@ public:
     virtual IDataManager * getDataManager() = 0;
 
 public slots:
-    virtual void clear() = 0;
+    virtual void clear();
+
     virtual void update() = 0;
 
-    virtual void createPreset(QString const & name) = 0;
-    virtual void updatePreset(QString const & name) = 0;
-    virtual void removePreset(QString const & name) = 0;
+    virtual void createPreset(QString const & name);
+    virtual void updatePreset(QString const & name);
+    virtual void removePreset(QString const & name);
 
-    virtual void loadPreset(QString const & name) = 0;
+    virtual void loadPreset(QString const & name);
 
 signals:
 

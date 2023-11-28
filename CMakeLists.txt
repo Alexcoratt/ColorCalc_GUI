@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
 
         itab.h
+        itab.cpp
+
         common_methods.h
         common_methods.cpp
 
@@ -29,6 +31,9 @@ set(PROJECT_SOURCES
 
         lacquercalculationtab.h
         lacquercalculationtab.cpp
+
+        foilcalculationtab.h
+        foilcalculationtab.cpp
 
         presetcreationpopup.h
         presetcreationpopup.cpp

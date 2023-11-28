@@ -40,15 +40,7 @@ public:
     QLineEdit * getResult();
 
 public slots:
-    void clear();
     void update();
-
-    void createPreset(QString const & name);
-    void updatePreset(QString const & name);
-    void removePreset(QString const & name);
-
-    void loadPreset(QString const & name);
-
     void calculate();
 
 private:

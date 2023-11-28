@@ -18,7 +18,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="paintTab">
        <property name="locale">
@@ -145,7 +145,7 @@
        <attribute name="title">
         <string>Расчет лака</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1,0">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,1,1,0">
         <item>
          <layout class="QHBoxLayout" name="lcComboBoxLayout">
           <item>
@@ -204,6 +204,19 @@
          </layout>
         </item>
         <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
          <widget class="QWidget" name="horizontalWidget_2" native="true">
           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="2,3,2">
            <item>
@@ -232,6 +245,104 @@
        <attribute name="title">
         <string>Расчет фольги</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,1,1,0">
+        <item>
+         <layout class="QHBoxLayout" name="fcComboBoxLayout">
+          <item>
+           <widget class="NamedField" name="foilPresetField" native="true"/>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="fcButtonLayout">
+            <item>
+             <widget class="QPushButton" name="fcCreatePresetButton">
+              <property name="text">
+               <string>Create</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="fcUpdatePresetButton">
+              <property name="text">
+               <string>Update</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="fcRemovePresetButton">
+              <property name="text">
+               <string>Remove</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0">
+          <property name="horizontalSpacing">
+           <number>64</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>6</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="NamedField" name="fcLengthField" native="true"/>
+          </item>
+          <item row="0" column="1">
+           <widget class="NamedField" name="fcLengthReserveField" native="true"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="NamedField" name="fcWidthField" native="true"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="NamedField" name="fcSheetNumberField" native="true"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="NamedField" name="fcWidthReserveField" native="true"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="NamedField" name="fcCirculationField" native="true"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QWidget" name="horizontalWidget_3" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="2,3,2">
+           <item>
+            <widget class="QPushButton" name="fcCalculateButton">
+             <property name="text">
+              <string>Рассчитать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="NamedField" name="fcResultField" native="true"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="fcClearFieldsButton">
+             <property name="text">
+              <string>Очистить поля</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>
