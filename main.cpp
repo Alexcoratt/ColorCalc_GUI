@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     }
 
     BaseConfigManager conf(BASE_CONFIG_FILE);
-    JSONConfigManager configManager{conf.getConfigFileName()};
+    JSONConfigManager configManager{conf.getConfigFileName(), conf.getQuiet()};
 
     MainWindow w(&configManager);
     w.show();

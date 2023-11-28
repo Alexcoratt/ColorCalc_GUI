@@ -32,6 +32,7 @@ void PresetRemovalPopUp::accept() {
 
         _tab->removePreset(_comboBox->currentText());
         close();
+
     } catch(std::runtime_error const & err) {
         _exceptionHandler(err, "Менеджер данных не установлен");
     } catch (std::invalid_argument const & err) {

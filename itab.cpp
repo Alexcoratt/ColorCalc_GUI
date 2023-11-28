@@ -1,4 +1,5 @@
 #include "itab.h"
+#include <iostream>
 
 void ITab::clear() {
     getDataManager()->clear();
@@ -6,15 +7,30 @@ void ITab::clear() {
 }
 
 void ITab::createPreset(QString const & name) {
-    getDataManager()->createPreset(name.toStdString());
+    try {
+        getDataManager()->createPreset(name.toStdString());
+    } catch (std::exception const & err) {
+        std::cerr << err.what() << std::endl;
+    }
+
     update();
 }
 void ITab::updatePreset(QString const & name) {
-    getDataManager()->updatePreset(name.toStdString());
+    try {
+        getDataManager()->updatePreset(name.toStdString());
+    } catch (std::exception const & err) {
+        std::cerr << err.what() << std::endl;
+    }
+
     update();
 };
 void ITab::removePreset(QString const & name) {
-    getDataManager()->removePreset(name.toStdString());
+    try {
+        getDataManager()->removePreset(name.toStdString());
+    } catch (std::exception const & err) {
+        std::cerr << err.what() << std::endl;
+    }
+
     update();
 };
 
