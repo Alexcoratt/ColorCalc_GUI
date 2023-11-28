@@ -35,6 +35,9 @@ set(PROJECT_SOURCES
         foilcalculationtab.h
         foilcalculationtab.cpp
 
+        foilrollstab.h
+        foilrollstab.cpp
+
         presetcreationpopup.h
         presetcreationpopup.cpp
 

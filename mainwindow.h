@@ -14,6 +14,7 @@
 #include "paintcalculationtab.h"
 #include "lacquercalculationtab.h"
 #include "foilcalculationtab.h"
+#include "foilrollstab.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,7 +25,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(IConfigManager * configManager, QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -43,5 +44,6 @@ private:
     PaintCalculationTab * _paintCalculationTab;
     LacquerCalculationTab * _lacquerCalculationTab;
     FoilCalculationTab * _foilCalculationTab;
+    FoilRollsTab * _foilRollsTab;
 };
 #endif // MAINWINDOW_H

@@ -36,12 +36,12 @@ void openPresetRemovalPopUp(ITab * tab) {
     popUp.exec();
 }
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    _configManager = new JSONConfigManager{ "/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc/data/config.json", false };
+    _configManager = configManager;
     auto connections = _configManager->getConnections();
 
     _paintConsumptionDataManager = new PaintConsumptionDataManager{connections.at("paint_consumption")};
@@ -111,13 +111,29 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->fcCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_foilCalculationTab); });
     connect(ui->fcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_foilCalculationTab); });
     connect(ui->fcRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_foilCalculationTab); });
+
+
+    // setting up foil rolls tab
+    _foilRollsTab = new FoilRollsTab(_foilRollsDataManager, _foilDataManager);
+
+    ui->foilRollsPresetField->set(_foilRollsTab->getPresetName(), "Название рулона");
+
+    ui->frLengthField->set(_foilRollsTab->getLength(), "Погонные метры", "м");
+    ui->frWidthField->set(_foilRollsTab->getWidth(), "Ширина", "мм");
+
+    ui->frSuitableRollsField->set(_foilRollsTab->getSuitableFoilRolls(), "Рулоны, подходящие под заданные параметры клише");
+
+    connect(ui->frFindSuitableRollsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::findSuitableRolls);
+    connect(ui->frClearFieldsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::clear);
+
+    connect(ui->frCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_foilRollsTab); });
+    connect(ui->frUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_foilRollsTab); });
+    connect(ui->frRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_foilRollsTab); });
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-
-    delete _configManager;
 
     delete _paintConsumptionDataManager;
     delete _paintDataManager;

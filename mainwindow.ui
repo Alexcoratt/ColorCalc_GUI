@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>ColorCalc GUI</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="applications-graphics"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -245,7 +248,7 @@
        <attribute name="title">
         <string>Расчет фольги</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,1,1,0">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1,0">
         <item>
          <layout class="QHBoxLayout" name="fcComboBoxLayout">
           <item>
@@ -334,6 +337,95 @@
            </item>
            <item>
             <widget class="QPushButton" name="fcClearFieldsButton">
+             <property name="text">
+              <string>Очистить поля</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="foilRollsTab">
+       <attribute name="title">
+        <string>Рулоны фольги</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,1,0">
+        <item>
+         <layout class="QHBoxLayout" name="frComboBoxLayout">
+          <item>
+           <widget class="NamedField" name="foilRollsPresetField" native="true"/>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="frButtonLayout">
+            <item>
+             <widget class="QPushButton" name="frCreatePresetButton">
+              <property name="text">
+               <string>Create</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="frUpdatePresetButton">
+              <property name="text">
+               <string>Update</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="frRemovePresetButton">
+              <property name="text">
+               <string>Remove</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="2,1">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0,1">
+            <item>
+             <widget class="NamedField" name="frLengthField" native="true"/>
+            </item>
+            <item>
+             <widget class="NamedField" name="frWidthField" native="true"/>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="NamedField" name="frSuitableRollsField" native="true"/>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QWidget" name="horizontalWidget_4" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="2,2">
+           <item>
+            <widget class="QPushButton" name="frFindSuitableRollsButton">
+             <property name="text">
+              <string>Рассчитать</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="frClearFieldsButton">
              <property name="text">
               <string>Очистить поля</string>
              </property>

@@ -1,10 +1,16 @@
 #include "mainwindow.h"
+#include <iostream>
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
 
 #include <namedfield.h>
+
+#include <BaseConfigManager.hpp>
+#include <JSONConfigManager.hpp>
+
+#define BASE_CONFIG_FILE "color_calc.conf"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +25,12 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWindow w;
+
+    BaseConfigManager conf(BASE_CONFIG_FILE);
+    JSONConfigManager configManager{conf.getConfigFileName()};
+
+    MainWindow w(&configManager);
     w.show();
+
     return a.exec();
 }
