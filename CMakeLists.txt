@@ -96,11 +96,11 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(ColorCalc_GUI)
 endif()
 
-add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc bin)
+add_subdirectory(modules/colorcalc bin/colorcalc)
 target_link_libraries(${PROJECT_NAME} PRIVATE ColorCalc_lib)
 
-add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc_GUI/NamedField NamedField/bin)
+add_subdirectory(modules/NamedField bin/namedfield)
 target_link_libraries(${PROJECT_NAME} PRIVATE NamedField_lib)
 
-add_subdirectory(/home/alexsm/LinuxFiles/Workshop/projects/ColorCalc_GUI/PopUp PopUp/bin)
+add_subdirectory(modules/PopUp bin/popup)
 target_link_libraries(${PROJECT_NAME} PRIVATE PopUp_lib)

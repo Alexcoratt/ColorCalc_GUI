@@ -1,0 +1,3 @@
+[submodule "modules/colorcalc"]
+	path = modules/colorcalc
+	url = https://github.com/Alexcoratt/ColorCalc

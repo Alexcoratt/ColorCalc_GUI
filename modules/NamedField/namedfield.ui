@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NamedField</class>
+ <widget class="QWidget" name="NamedField">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>257</width>
+    <height>63</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NamedField</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1">
+   <item>
+    <widget class="QLabel" name="nameLabel">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+     <item>
+      <layout class="QVBoxLayout" name="fieldLayout"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="unitsLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
