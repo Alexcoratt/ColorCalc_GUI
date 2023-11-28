@@ -1,10 +1,65 @@
 #include <iostream>
 #include <sstream>
+#include <map>
 
 #include "paintcalculationtab.h"
 #include "common_methods.h"
 
 namespace cm = common_methods;
+
+template <typename T>
+class BiMap {
+private:
+    std::map<T, T> _map;
+
+public:
+    BiMap(std::map<T, T> const & map = {}) {
+        for (auto it = map.begin(); it != map.end(); ++it) {
+            _map[it->first] = it->second;
+            _map[it->second] = it->first;
+        }
+    }
+
+    T const & at(T const & key) const {
+        return _map.at(key);
+    }
+    T & at(T const & key) {
+        return _map.at(key);
+    }
+    T & operator[](T const & key) {
+        return _map[key];
+    }
+};
+
+BiMap<std::string> const PAINT_TYPES{{
+    {"metallized_paint", "Металлизированная краска"},
+    {"folic_paint", "Фолиевая краска"},
+    {"uv_curable_paint", "УФ-отверждаемая краска"},
+    {"ordinary_paint", "Обычная краска, PANTONE"},
+}};
+
+BiMap<std::string> const MATERIAL_TYPES{{
+    {"coated_paper", "Мелованная бумага"},
+    {"label_paper", "Этикеточная бумага"},
+    {"paperboard", "Картон"},
+    {"non_absorbent_material", "Невпитывающий материал"}
+}};
+
+template <typename T>
+std::string translate(std::string const & line, BiMap<T> const & dict) {
+    try {
+        return dict.at(line);
+    } catch (std::out_of_range const & err) {
+        std::cerr << err.what() << std::endl;
+        return line;
+    }
+}
+
+void fillComboBoxTranslated(QComboBox * comboBox, std::vector<std::string> const & values, BiMap<std::string> const & dict) {
+    comboBox->clear();
+    for (auto const & value : values)
+        comboBox->addItem(QString::fromStdString(translate(value, dict)));
+}
 
 PaintCalculationTab::PaintCalculationTab(PaintDataManager * mgr) {
     _paintDataManager = mgr;
@@ -15,11 +70,11 @@ PaintCalculationTab::PaintCalculationTab(PaintDataManager * mgr) {
     _presetName->setMaximumWidth(256);
 
     _paintType = cm::getComboBox();
-    cm::fillComboBox(_paintType, _paintDataManager->getPaintTypes());
+    fillComboBoxTranslated(_paintType, _paintDataManager->getPaintTypes(), PAINT_TYPES);
     connect(_paintType, &QComboBox::currentTextChanged, this, &PaintCalculationTab::uploadPaintType);
 
     _materialType = cm::getComboBox();
-    cm::fillComboBox(_materialType, _paintDataManager->getMaterialTypes());
+    fillComboBoxTranslated(_materialType, _paintDataManager->getMaterialTypes(), MATERIAL_TYPES);
     connect(_materialType, &QComboBox::currentTextChanged, this, &PaintCalculationTab::uploadMaterialType);
 
     _paintConsumption = cm::getLineEdit();
@@ -100,11 +155,11 @@ void PaintCalculationTab::update() {
     cm::fillComboBox(_presetName, _paintDataManager->getConnection()->getPresetNames());
     cm::setComboBoxIndex(_presetName, [&]() { return _paintDataManager->getName(); });
 
-    cm::fillComboBox(_paintType, _paintDataManager->getPaintTypes());
-    cm::setComboBoxIndex(_paintType, [&]() { return _paintDataManager->getPaintType(); });
+    fillComboBoxTranslated(_paintType, _paintDataManager->getPaintTypes(), PAINT_TYPES);
+    cm::setComboBoxIndex(_paintType, [&]() { return translate(_paintDataManager->getPaintType(), PAINT_TYPES); });
 
-    cm::fillComboBox(_materialType, _paintDataManager->getMaterialTypes());
-    cm::setComboBoxIndex(_materialType, [&]() { return _paintDataManager->getMaterialType(); });
+    fillComboBoxTranslated(_materialType, _paintDataManager->getMaterialTypes(), MATERIAL_TYPES);
+    cm::setComboBoxIndex(_materialType, [&]() { return translate(_paintDataManager->getMaterialType(), MATERIAL_TYPES); });
 
     cm::setLineEditValue<double>(_paintConsumption, [&]() { return _paintDataManager->getPaintConsumption(); });
     cm::setLineEditValue<double>(_divider, [&]() { return _paintDataManager->getDivider(); });
@@ -128,7 +183,8 @@ void PaintCalculationTab::uploadPaintType() {
         return;
     }
 
-    _paintDataManager->setPaintType(type);
+    _paintDataManager->setPaintType(translate(type, PAINT_TYPES));
+
     std::cout << "OK\n";
     update();
 }
@@ -142,7 +198,8 @@ void PaintCalculationTab::uploadMaterialType() {
         return;
     }
 
-    _paintDataManager->setMaterialType(type);
+    _paintDataManager->setMaterialType(translate(type, MATERIAL_TYPES));
+
     std::cout << "OK\n";
     update();
 }
