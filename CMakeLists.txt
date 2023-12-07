@@ -76,7 +76,11 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(ColorCalc_GUI PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(ColorCalc_GUI
+    PRIVATE Qt${QT_VERSION_MAJOR}::Core
+    PRIVATE Qt${QT_VERSION_MAJOR}::Gui
+    PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+)
 
 set_target_properties(ColorCalc_GUI PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -97,10 +101,17 @@ if(QT_VERSION_MAJOR EQUAL 6)
 endif()
 
 add_subdirectory(modules/colorcalc bin/colorcalc)
-target_link_libraries(${PROJECT_NAME} PRIVATE ColorCalc_lib)
-
 add_subdirectory(modules/NamedField bin/namedfield)
-target_link_libraries(${PROJECT_NAME} PRIVATE NamedField_lib)
-
 add_subdirectory(modules/PopUp bin/popup)
-target_link_libraries(${PROJECT_NAME} PRIVATE PopUp_lib)
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE ColorCalc_lib
+    PRIVATE NamedField_lib
+    PRIVATE PopUp_lib
+)
+
+if (WIN32)
+    set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic")
+else ()
+    set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc")
+endif()
