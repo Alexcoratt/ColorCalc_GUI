@@ -25,15 +25,22 @@ public:
     QString getName() const;
     void setName(QString const &);
 
+    QString getHelpText() const;
+    void setHelpText(QString const &);
+
+    bool getHelpButtonVisible() const;
+    void setHelpButtonVisible(bool isVisible);
+
     QString getUnits() const;
     void setUnits(QString const &);
 
-    void set(QWidget *, QString const & name, QString const & units = "");
+public slots:
+    void helpButtonClicked();
 
 private:
     Ui::NamedField *ui;
     QWidget * _field;
-    QString _name;
-    QString _units;
+
+    QString _helpText;
 };
 #endif // NAMEDFIELD_H

@@ -14,7 +14,8 @@
    <string>ColorCalc GUI</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="applications-graphics"/>
+   <iconset theme="applications-graphics">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -53,6 +54,9 @@
               <widget class="QPushButton" name="pcCreatePresetButton">
                <property name="text">
                 <string>Create</string>
+               </property>
+               <property name="checkable">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -121,11 +125,11 @@
         </item>
         <item>
          <widget class="QWidget" name="horizontalWidget" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,3,2">
+          <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2,1">
            <item>
-            <widget class="QPushButton" name="pcCalculateButton">
+            <widget class="QPushButton" name="pcClearFieldsButton">
              <property name="text">
-              <string>Рассчитать</string>
+              <string>Очистить поля</string>
              </property>
             </widget>
            </item>
@@ -133,9 +137,12 @@
             <widget class="NamedField" name="pcResultField" native="true"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pcClearFieldsButton">
+            <widget class="QPushButton" name="pcCalculateButton">
              <property name="text">
-              <string>Очистить поля</string>
+              <string>Рассчитать</string>
+             </property>
+             <property name="autoDefault">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -221,11 +228,11 @@
         </item>
         <item>
          <widget class="QWidget" name="horizontalWidget_2" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="2,3,2">
+          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,2,1">
            <item>
-            <widget class="QPushButton" name="lcCalculateButton">
+            <widget class="QPushButton" name="lcClearFieldsButton">
              <property name="text">
-              <string>Рассчитать</string>
+              <string>Очистить поля</string>
              </property>
             </widget>
            </item>
@@ -233,9 +240,9 @@
             <widget class="NamedField" name="lcResultField" native="true"/>
            </item>
            <item>
-            <widget class="QPushButton" name="lcClearFieldsButton">
+            <widget class="QPushButton" name="lcCalculateButton">
              <property name="text">
-              <string>Очистить поля</string>
+              <string>Рассчитать</string>
              </property>
             </widget>
            </item>
@@ -324,11 +331,11 @@
         </item>
         <item>
          <widget class="QWidget" name="horizontalWidget_3" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="2,3,2">
+          <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,2,1">
            <item>
-            <widget class="QPushButton" name="fcCalculateButton">
+            <widget class="QPushButton" name="fcClearFieldsButton">
              <property name="text">
-              <string>Рассчитать</string>
+              <string>Очистить поля</string>
              </property>
             </widget>
            </item>
@@ -336,9 +343,9 @@
             <widget class="NamedField" name="fcResultField" native="true"/>
            </item>
            <item>
-            <widget class="QPushButton" name="fcClearFieldsButton">
+            <widget class="QPushButton" name="fcCalculateButton">
              <property name="text">
-              <string>Очистить поля</string>
+              <string>Рассчитать</string>
              </property>
             </widget>
            </item>
@@ -416,18 +423,18 @@
         </item>
         <item>
          <widget class="QWidget" name="horizontalWidget_4" native="true">
-          <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="2,2">
-           <item>
-            <widget class="QPushButton" name="frFindSuitableRollsButton">
-             <property name="text">
-              <string>Рассчитать</string>
-             </property>
-            </widget>
-           </item>
+          <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,1">
            <item>
             <widget class="QPushButton" name="frClearFieldsButton">
              <property name="text">
               <string>Очистить поля</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="frFindSuitableRollsButton">
+             <property name="text">
+              <string>Рассчитать</string>
              </property>
             </widget>
            </item>

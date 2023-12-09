@@ -36,6 +36,18 @@ void openPresetRemovalPopUp(ITab * tab) {
     popUp.exec();
 }
 
+void setNamedField(NamedField * nf, QWidget * widget, QString const & name, QString const & units = "", bool helpButtonVisible = false, QString const & helpText = "") {
+    nf->setWidget(widget);
+    nf->setName(name);
+    nf->setUnits(units);
+    nf->setHelpButtonVisible(helpButtonVisible);
+    nf->setHelpText(helpText);
+}
+
+void setNamedField(NamedField * nf, QWidget * widget, QString const & name, bool helpButtonVisible, QString const & helpText) {
+    setNamedField(nf, widget, name, "", helpButtonVisible, helpText);
+}
+
 MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -53,18 +65,18 @@ MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     // setting up paint calculation tab
     _paintCalculationTab = new PaintCalculationTab(_paintDataManager);
 
-    ui->paintPresetField->set(_paintCalculationTab->getPresetName(), "Имя пресета");
-    ui->paintTypeField->set(_paintCalculationTab->getPaintType(), "Тип краски");
-    ui->materialTypeField->set(_paintCalculationTab->getMaterialType(), "Тип материала");
+    setNamedField(ui->paintPresetField, _paintCalculationTab->getPresetName(), "Тип изображения", true, "Тип изображения к запечатке");
+    setNamedField(ui->paintTypeField, _paintCalculationTab->getPaintType(), "Тип краски");
+    setNamedField(ui->materialTypeField, _paintCalculationTab->getMaterialType(), "Тип материала");
 
-    ui->pcConsumptionField->set(_paintCalculationTab->getPaintConsumption(), "Расход краски", "г/м2");
-    ui->pcDividerField->set(_paintCalculationTab->getDivider(), "Делитель");
-    ui->pcPercentageField->set(_paintCalculationTab->getPercent(), "Процент запечатки", "%");
-    ui->pcSheetWidthField->set(_paintCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
-    ui->pcSheetLengthField->set(_paintCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
-    ui->pcCirculationField->set(_paintCalculationTab->getCirculation(), "Тираж");
-    ui->pcPaintReserveField->set(_paintCalculationTab->getPaintReserve(), "Запас краски", "кг");
-    ui->pcResultField->set(_paintCalculationTab->getResult(), "Объем краски", "кг");
+    setNamedField(ui->pcConsumptionField, _paintCalculationTab->getPaintConsumption(), "Расход краски", "г/м2");
+    setNamedField(ui->pcDividerField, _paintCalculationTab->getDivider(), "Поправочный коэффициент", true, "Поправочный коэффициент (делитель), присутствующий в формуле");
+    setNamedField(ui->pcPercentageField, _paintCalculationTab->getPercent(), "Процент запечатки", "%");
+    setNamedField(ui->pcSheetWidthField, _paintCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
+    setNamedField(ui->pcSheetLengthField, _paintCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
+    setNamedField(ui->pcCirculationField, _paintCalculationTab->getCirculation(), "Тираж");
+    setNamedField(ui->pcPaintReserveField, _paintCalculationTab->getPaintReserve(), "Запас краски", "кг");
+    setNamedField(ui->pcResultField, _paintCalculationTab->getResult(), "Объем краски", "кг");
 
     connect(ui->pcCalculateButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::calculate);
     connect(ui->pcClearFieldsButton, &QPushButton::clicked, _paintCalculationTab, &PaintCalculationTab::clear);
@@ -76,14 +88,14 @@ MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     // setting up lacquer calculation tab
     _lacquerCalculationTab = new LacquerCalculationTab(_lacquerDataManager);
 
-    ui->lacquerPresetField->set(_lacquerCalculationTab->getPresetName(), "Имя пресета");
+    setNamedField(ui->lacquerPresetField, _lacquerCalculationTab->getPresetName(), "Имя пресета", true, "Пресет - заранее составленный набор значений");
 
-    ui->lcConsumptionField->set(_lacquerCalculationTab->getLacquerConsumption(), "Расход краски", "г/м2");
-    ui->lcPercentageField->set(_lacquerCalculationTab->getPercentage(), "Процент заливки", "%");
-    ui->lcSheetWidthField->set(_lacquerCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
-    ui->lcSheetLengthField->set(_lacquerCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
-    ui->lcCirculationField->set(_lacquerCalculationTab->getCirculation(), "Тираж");
-    ui->lcResultField->set(_lacquerCalculationTab->getResult(), "Объем лака", "кг");
+    setNamedField(ui->lcConsumptionField, _lacquerCalculationTab->getLacquerConsumption(), "Расход краски", "г/м2");
+    setNamedField(ui->lcPercentageField, _lacquerCalculationTab->getPercentage(), "Процент заливки", "%");
+    setNamedField(ui->lcSheetWidthField, _lacquerCalculationTab->getSheetWidth(), "Ширина печатного листа", "мм");
+    setNamedField(ui->lcSheetLengthField, _lacquerCalculationTab->getSheetLength(), "Длина печатного листа", "мм");
+    setNamedField(ui->lcCirculationField, _lacquerCalculationTab->getCirculation(), "Тираж");
+    setNamedField(ui->lcResultField, _lacquerCalculationTab->getResult(), "Объем лака", "кг");
 
     connect(ui->lcCalculateButton, &QPushButton::clicked, _lacquerCalculationTab, &LacquerCalculationTab::calculate);
     connect(ui->lcClearFieldsButton, &QPushButton::clicked, _lacquerCalculationTab, &LacquerCalculationTab::clear);
@@ -95,15 +107,15 @@ MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     // setting up foil calculation tab
     _foilCalculationTab = new FoilCalculationTab(_foilDataManager);
 
-    ui->foilPresetField->set(_foilCalculationTab->getPresetName(), "Имя пресета");
+    setNamedField(ui->foilPresetField, _foilCalculationTab->getPresetName(), "Имя пресета", true, "Пресет - заранее составленный набор значений");
 
-    ui->fcLengthField->set(_foilCalculationTab->getLength(), "Длина клише", "мм");
-    ui->fcLengthReserveField->set(_foilCalculationTab->getLengthReserve(), "Запас по длине", "мм");
-    ui->fcWidthField->set(_foilCalculationTab->getWidth(), "Ширина клише", "мм");
-    ui->fcWidthReserveField->set(_foilCalculationTab->getWidthReserve(), "Запас по ширине", "мм");
-    ui->fcSheetNumberField->set(_foilCalculationTab->getSheetNumber(), "Число печатных листов");
-    ui->fcCirculationField->set(_foilCalculationTab->getCirculation(), "Тираж");
-    ui->fcResultField->set(_foilCalculationTab->getResult(), "Погонные метры", "м");
+    setNamedField(ui->fcLengthField, _foilCalculationTab->getLength(), "Длина клише", "мм");
+    setNamedField(ui->fcLengthReserveField, _foilCalculationTab->getLengthReserve(), "Запас по длине", "мм");
+    setNamedField(ui->fcWidthField, _foilCalculationTab->getWidth(), "Ширина клише", "мм");
+    setNamedField(ui->fcWidthReserveField, _foilCalculationTab->getWidthReserve(), "Запас по ширине", "мм");
+    setNamedField(ui->fcSheetNumberField, _foilCalculationTab->getSheetNumber(), "Число печатных листов");
+    setNamedField(ui->fcCirculationField, _foilCalculationTab->getCirculation(), "Тираж");
+    setNamedField(ui->fcResultField, _foilCalculationTab->getResult(), "Погонные метры", "м");
 
     connect(ui->fcCalculateButton, &QPushButton::clicked, _foilCalculationTab, &FoilCalculationTab::calculate);
     connect(ui->fcClearFieldsButton, &QPushButton::clicked, _foilCalculationTab, &FoilCalculationTab::clear);
@@ -112,16 +124,15 @@ MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     connect(ui->fcUpdatePresetButton, &QPushButton::clicked, [&]() { openPresetUpdatePopUp(_foilCalculationTab); });
     connect(ui->fcRemovePresetButton, &QPushButton::clicked, [&]() { openPresetRemovalPopUp(_foilCalculationTab); });
 
-
     // setting up foil rolls tab
     _foilRollsTab = new FoilRollsTab(_foilRollsDataManager, _foilDataManager);
 
-    ui->foilRollsPresetField->set(_foilRollsTab->getPresetName(), "Название рулона");
+    setNamedField(ui->foilRollsPresetField, _foilRollsTab->getPresetName(), "Название рулона");
 
-    ui->frLengthField->set(_foilRollsTab->getLength(), "Погонные метры", "м");
-    ui->frWidthField->set(_foilRollsTab->getWidth(), "Ширина", "мм");
+    setNamedField(ui->frLengthField, _foilRollsTab->getLength(), "Погонные метры", "м");
+    setNamedField(ui->frWidthField, _foilRollsTab->getWidth(), "Ширина", "мм");
 
-    ui->frSuitableRollsField->set(_foilRollsTab->getSuitableFoilRolls(), "Рулоны, подходящие под заданные параметры клише");
+    setNamedField(ui->frSuitableRollsField, _foilRollsTab->getSuitableFoilRolls(), "Рулоны, подходящие под заданные параметры клише");
 
     connect(ui->frFindSuitableRollsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::findSuitableRolls);
     connect(ui->frClearFieldsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::clear);
