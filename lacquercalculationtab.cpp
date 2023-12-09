@@ -85,6 +85,12 @@ void LacquerCalculationTab::calculate() {
         _result->clear();
         std::cerr << err.what() << std::endl;
     }
+
+    cm::markError(_lacquerConsumption);
+    cm::markError(_percentage);
+    cm::markError(_sheetWidth);
+    cm::markError(_sheetLength);
+    cm::markError(_circulation);
 }
 
 // private slots

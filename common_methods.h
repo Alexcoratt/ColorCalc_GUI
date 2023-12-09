@@ -9,29 +9,32 @@
 
 namespace common_methods {
 
-constexpr char const * LINE_EDIT_PLACEHOLDER{"Введите значение"};
-constexpr char const * COMBO_BOX_PLACEHOLDER{"Не выбрано"};
+    constexpr char const * LINE_EDIT_PLACEHOLDER{"Введите значение"};
+    constexpr char const * COMBO_BOX_PLACEHOLDER{"Не выбрано"};
 
-QLineEdit * getLineEdit(QString const & placeholder = LINE_EDIT_PLACEHOLDER, bool readOnly = false);
-QComboBox * getComboBox(QString const & placeholder = COMBO_BOX_PLACEHOLDER);
-QComboBox * getComboBox(std::vector<std::string> const & items, QString const & placeholder = COMBO_BOX_PLACEHOLDER);
-void fillComboBox(QComboBox * comboBox, std::vector<std::string> const & items);
+    QLineEdit * getLineEdit(QString const & placeholder = LINE_EDIT_PLACEHOLDER, bool readOnly = false);
+    QComboBox * getComboBox(QString const & placeholder = COMBO_BOX_PLACEHOLDER);
+    QComboBox * getComboBox(std::vector<std::string> const & items, QString const & placeholder = COMBO_BOX_PLACEHOLDER);
+    void fillComboBox(QComboBox * comboBox, std::vector<std::string> const & items);
 
-void setComboBoxIndex(QComboBox * comboBox, QString const & value);
-void setComboBoxIndex(QComboBox * comboBox, std::function<QString()> get);
-void setComboBoxIndex(QComboBox * comboBox, std::function<std::string()> get);
+    void setComboBoxIndex(QComboBox * comboBox, QString const & value);
+    void setComboBoxIndex(QComboBox * comboBox, std::function<QString()> get);
+    void setComboBoxIndex(QComboBox * comboBox, std::function<std::string()> get);
 
-template<typename T>
-std::string toString(T const & n);
+    template<typename T>
+    std::string toString(T const & n);
 
-template <typename T>
-void setLineEditValue(QLineEdit * lineEdit, std::function<T()> const & get);
+    template <typename T>
+    void setLineEditValue(QLineEdit * lineEdit, std::function<T()> const & get);
 
-template <typename T, typename V>
-void setManagerParam(std::function<void(T)> const & set, std::function<void()> const & clear, V const & value, std::function<T(V)> const & converter);
+    template <typename T, typename V>
+    void setManagerParam(std::function<void(T)> const & set, std::function<void()> const & clear, V const & value, std::function<T(V)> const & converter);
 
-double toDouble(QString const & line);
-double toULong(QString const & line);
+    double toDouble(QString const & line);
+    double toULong(QString const & line);
+
+    void markError(QLineEdit * lineEdit, bool isError);
+    void markError(QLineEdit * lineEdit);
 
 }
 

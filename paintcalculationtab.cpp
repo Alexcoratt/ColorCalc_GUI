@@ -288,4 +288,11 @@ void PaintCalculationTab::calculate() {
         _result->clear();
         std::cerr << err.what() << std::endl;
     }
+    cm::markError(_paintConsumption);
+    cm::markError(_divider);
+    cm::markError(_percent);
+    cm::markError(_sheetWidth);
+    cm::markError(_sheetLength);
+    cm::markError(_circulation);
+    cm::markError(_paintReserve);
 }

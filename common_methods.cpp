@@ -64,3 +64,14 @@ double common_methods::toULong(QString const & line) {
         return res;
     throw std::invalid_argument("toULong: invalid line \"" + line.toStdString() + "\"");
 }
+
+void common_methods::markError(QLineEdit * lineEdit, bool isError) {
+    QPalette palette = lineEdit->style()->standardPalette();
+    if (isError)
+        palette.setColor(lineEdit->backgroundRole(), QColor::fromRgb(255, 0, 0, 20));
+    lineEdit->setPalette(palette);
+}
+
+void common_methods::markError(QLineEdit * lineEdit) {
+    markError(lineEdit, lineEdit->text().isEmpty());
+}
