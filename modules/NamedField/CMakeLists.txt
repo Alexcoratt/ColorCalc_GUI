@@ -62,6 +62,8 @@ if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(NamedField)
 endif()
 
+file(COPY assets DESTINATION .)
+
 add_library(NamedField_lib STATIC ${PROJECT_SOURCES})
 target_link_libraries(NamedField_lib PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_include_directories(NamedField_lib PUBLIC .)

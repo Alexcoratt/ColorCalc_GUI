@@ -34,6 +34,7 @@ void NamedField::setWidget(QWidget * field) {
 
 QString NamedField::getName() const { return ui->nameLabel->text(); }
 void NamedField::setName(QString const & name) { ui->nameLabel->setText(name); }
+QLabel * NamedField::getNameLabel() { return ui->nameLabel; }
 
 QString NamedField::getHelpText() const { return _helpText; }
 void NamedField::setHelpText(QString const & text) { _helpText = text; }
@@ -43,6 +44,7 @@ void NamedField::setHelpButtonVisible(bool isVisible) { ui->helpButton->setVisib
 
 QString NamedField::getUnits() const { return ui->unitsLabel->text(); }
 void NamedField::setUnits(QString const & units) { ui->unitsLabel->setText(units); }
+QLabel * NamedField::getUnitsLabel() { return ui->unitsLabel; }
 
 void NamedField::helpButtonClicked() {
     QMessageBox mb;

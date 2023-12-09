@@ -1,7 +1,7 @@
 #ifndef NAMEDFIELD_H
 #define NAMEDFIELD_H
 
-#include <memory>
+#include <QLabel>
 
 #include <QWidget>
 #include <QString>
@@ -24,6 +24,7 @@ public:
 
     QString getName() const;
     void setName(QString const &);
+    QLabel * getNameLabel();
 
     QString getHelpText() const;
     void setHelpText(QString const &);
@@ -33,6 +34,7 @@ public:
 
     QString getUnits() const;
     void setUnits(QString const &);
+    QLabel * getUnitsLabel();
 
 public slots:
     void helpButtonClicked();

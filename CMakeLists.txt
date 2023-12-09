@@ -110,6 +110,11 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE PopUp_lib
 )
 
+file(COPY assets DESTINATION .)
+file(COPY modules/NamedField/assets DESTINATION .)
+file(COPY configs/color_calc.conf DESTINATION .)
+file(COPY data DESTINATION .)
+
 if (WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "-static-libstdc++ -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic")
 else ()

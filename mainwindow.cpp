@@ -133,6 +133,8 @@ MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     setNamedField(ui->frWidthField, _foilRollsTab->getWidth(), "Ширина", "мм");
 
     setNamedField(ui->frSuitableRollsField, _foilRollsTab->getSuitableFoilRolls(), "Рулоны, подходящие под заданные параметры клише");
+    ui->frSuitableRollsField->getNameLabel()->setWordWrap(true);
+    ui->frSuitableRollsField->getUnitsLabel()->setMinimumWidth(0);
 
     connect(ui->frFindSuitableRollsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::findSuitableRolls);
     connect(ui->frClearFieldsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::clear);
