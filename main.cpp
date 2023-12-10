@@ -14,6 +14,17 @@
 
 int main(int argc, char *argv[])
 {
+    if (argc > 2) {
+        printf("Usage: %s <base_config_file>\n", argv[0]);
+        return -1;
+    }
+
+    std::string baseConf;
+    if (argc == 1)
+        baseConf = BASE_CONFIG_FILE;
+    else
+        baseConf = argv[2];
+
     QApplication a(argc, argv);
 
     QTranslator translator;
@@ -26,7 +37,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    BaseConfigManager conf(BASE_CONFIG_FILE);
+    BaseConfigManager conf(baseConf);
     JSONConfigManager configManager{conf.getConfigFileName(), conf.getQuiet()};
 
     MainWindow w(&configManager);

@@ -92,6 +92,12 @@ void FoilCalculationTab::calculate() {
         _result->clear();
         std::cerr << err.what() << std::endl;
     }
+    cm::markError(_length);
+    cm::markError(_lengthReserve);
+    cm::markError(_width);
+    cm::markError(_widthReserve);
+    cm::markError(_sheetNumber);
+    cm::markError(_circulation);
 }
 
 // private slots
