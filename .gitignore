@@ -74,3 +74,6 @@ CMakeLists.txt.user*
 
 # User build folders
 *build*
+
+# clangd cache files
+.cache
