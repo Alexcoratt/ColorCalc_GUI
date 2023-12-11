@@ -23,6 +23,7 @@ PresetCreationPopUp::PresetCreationPopUp(ITab * tab, std::function<void(std::exc
             _targetConnection.addItem(QString::fromStdString(connName));
         }
         _centralLayout->addWidget(&_targetConnection);
+        _targetConnection.setCurrentIndex(nestedConnections.size() - 1);
     }
 
     _centralWidget = new QWidget{};

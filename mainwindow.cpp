@@ -11,6 +11,8 @@
 #include "presetupdatepopup.h"
 #include "presetremovalpopup.h"
 
+#include "common_methods.h"
+
 #include <JSONConfigManager.hpp>
 
 void exceptionHandler(std::exception const & err, std::string const & text) {
@@ -136,7 +138,20 @@ MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
     ui->frSuitableRollsField->getNameLabel()->setWordWrap(true);
     ui->frSuitableRollsField->getUnitsLabel()->setMinimumWidth(0);
 
-    connect(ui->frFindSuitableRollsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::findSuitableRolls);
+    connect(ui->frFindSuitableRollsButton, &QPushButton::clicked, [&]() {
+        try {
+            _foilRollsTab->findSuitableRolls();
+            common_methods::markError(_foilCalculationTab->getWidth(), false);
+            common_methods::markError(_foilCalculationTab->getWidthReserve(), false);
+        } catch (std::exception const & err) {
+            std::cerr << err.what() << std::endl;
+            ui->tabWidget->setCurrentIndex(2);
+            _foilCalculationTab->update();
+            common_methods::markError(_foilCalculationTab->getWidth());
+            common_methods::markError(_foilCalculationTab->getWidthReserve());
+        }
+    });
+    //connect(ui->frFindSuitableRollsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::findSuitableRolls);
     connect(ui->frClearFieldsButton, &QPushButton::clicked, _foilRollsTab, &FoilRollsTab::clear);
 
     connect(ui->frCreatePresetButton, &QPushButton::clicked, [&]() { openPresetCreationPopUp(_foilRollsTab); });

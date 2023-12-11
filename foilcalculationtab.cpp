@@ -82,6 +82,9 @@ void FoilCalculationTab::update() {
 
     calculate();
 
+    cm::markError(_width, false);
+    cm::markError(_widthReserve, false);
+
     std::cout << "FoilCalculationTab: updated" << std::endl;
 }
 
@@ -130,6 +133,7 @@ void FoilCalculationTab::uploadWidth() {
         cm::toDouble
     );
     update();
+    cm::markError(_width);
 }
 
 void FoilCalculationTab::uploadWidthReserve() {
@@ -141,6 +145,7 @@ void FoilCalculationTab::uploadWidthReserve() {
         cm::toDouble
     );
     update();
+    cm::markError(_widthReserve);
 }
 
 void FoilCalculationTab::uploadSheetNumber() {
