@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     if (argc == 1)
         baseConf = BASE_CONFIG_FILE;
     else
-        baseConf = argv[2];
+        baseConf = argv[1];
 
     QApplication a(argc, argv);
 
