@@ -143,7 +143,10 @@ MainWindow::MainWindow(IConfigManager * configManager, QWidget *parent)
             _foilRollsTab->findSuitableRolls();
             common_methods::markError(_foilCalculationTab->getWidth(), false);
             common_methods::markError(_foilCalculationTab->getWidthReserve(), false);
-        } catch (std::exception const & err) {
+        } catch (std::invalid_argument const & err) {
+            exceptionHandler(err, "Рулоны фольги, подходящие под заданные параметры, не найдены");
+        }
+        catch (std::exception const & err) {
             std::cerr << err.what() << std::endl;
             ui->tabWidget->setCurrentIndex(2);
             _foilCalculationTab->update();

@@ -55,13 +55,11 @@ void FoilRollsTab::update() {
 void FoilRollsTab::findSuitableRolls() {
     _suitableFoilRolls->clear();
     auto rolls = _foilDataManager->getSuitableFoilRolls();
+    if (rolls.empty())
+        throw std::invalid_argument("FoilRollsTab: suitable rolls not found");
+
     for (auto const & roll : rolls)
         _suitableFoilRolls->addItem(QString::fromStdString(roll));
-
-    if (rolls.empty())
-        std::cout << "FoilRollsTab: suitable rolls not found" << std::endl;
-    else
-        std::cout << "FoilRollsTab: suitable rolls found" << std::endl;
 }
 
 // private slots

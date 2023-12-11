@@ -133,7 +133,13 @@ void FoilCalculationTab::uploadWidth() {
         cm::toDouble
     );
     update();
-    cm::markError(_width);
+    if (_width->text().isEmpty() && _widthReserve->text().isEmpty()) {
+        cm::markError(_width, false);
+        cm::markError(_widthReserve, false);
+    } else {
+        cm::markError(_width);
+        cm::markError(_widthReserve);
+    }
 }
 
 void FoilCalculationTab::uploadWidthReserve() {
@@ -145,7 +151,13 @@ void FoilCalculationTab::uploadWidthReserve() {
         cm::toDouble
     );
     update();
-    cm::markError(_widthReserve);
+    if (_width->text().isEmpty() && _widthReserve->text().isEmpty()) {
+        cm::markError(_width, false);
+        cm::markError(_widthReserve, false);
+    } else {
+        cm::markError(_width);
+        cm::markError(_widthReserve);
+    }
 }
 
 void FoilCalculationTab::uploadSheetNumber() {
