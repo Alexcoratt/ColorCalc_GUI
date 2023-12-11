@@ -19,6 +19,8 @@ public slots:
     virtual void update() = 0;
 
     virtual void createPreset(QString const & name);
+    virtual void createPreset(QString const & name, ITableConnection * targetConnection);
+
     virtual void updatePreset(QString const & name);
     virtual void removePreset(QString const & name);
 

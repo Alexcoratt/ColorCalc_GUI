@@ -2,6 +2,7 @@
 #include "common_methods.h"
 
 #include <PresetDoesNotExistException.hpp>
+#include <ReadOnlyConnectionException.hpp>
 
 PresetRemovalPopUp::PresetRemovalPopUp(ITab * tab, std::function<void(std::exception const &, std::string const &)> const & exceptionHandler, QWidget *parent)
     : InputPopUp{parent}
@@ -39,5 +40,11 @@ void PresetRemovalPopUp::accept() {
         _exceptionHandler(err, "Пресет не выбран");
     } catch (PresetDoesNotExistException const & err) {
         _exceptionHandler(err, "Пресета с именем \"" + _comboBox->currentText().toStdString() + "\" не существует");
+    } catch (ReadOnlyConnectionException const & err) {
+        _exceptionHandler(err, "Данный источник открыт только для записи (изменения сохранены до перезапуска приложения)");
+        _tab->update();
+        close();
+    } catch (std::exception const & err) {
+        _exceptionHandler(err, "Неизвестная ошибка: " + std::string(err.what()));
     }
 }

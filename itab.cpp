@@ -10,6 +10,11 @@ void ITab::createPreset(QString const & name) {
     getDataManager()->createPreset(name.toStdString());
     update();
 }
+void ITab::createPreset(QString const & name, ITableConnection * targetConnection) {
+    targetConnection->createPreset(name.toStdString(), getDataManager()->exportData());
+    update();
+}
+
 void ITab::updatePreset(QString const & name) {
     getDataManager()->updatePreset(name.toStdString());
     update();
